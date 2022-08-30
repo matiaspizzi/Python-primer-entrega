@@ -27,23 +27,32 @@ def deportes(request):
 def getDeporte(request):
     if request.GET["deporte"]:
         depor = request.GET["deporte"]
-        deporte = Deportes.objects.filter(nombre=depor)
+        deporte = Deportes.objects.filter(nombre = depor)
         if len(deporte) != 0:
-            return render(request, "Appentrega/resultadoBusqueda.html", {"Deporte": deporte})
+            return render(request, "Appentrega/deportes.html", {"deportes": deporte})
         else:
-            return render(request, "Appentrega/resultadoBusqueda.html", {"mensaje": "No hay deportes"})
+            return render(request, "Appentrega/deportes.html", {"mensaje": "No se encontraron deportes"})
     else:
-        return render(request, "Appentrega/busquedaDeporte.html", {"mensaje": "No enviaste datos!"})
+        return redirect("AppEntrega:deportes")
 
 
 def postDeporte(request):
-    nombre = input("")
-    turno = input("")
-    # deporte=Deportes(nombre="BASKET",turno="Mañana")
-    deporte = Deportes(nombre, turno)
-    deporte.save()
-    texto = f"Deporte Creado: nombre: {deporte.nombre} turno: {deporte.turno}"
-    return HttpResponse(texto)
+    if request.method == "POST":
+        form = formDeporte(request.POST)
+        if form.is_valid():
+            info = form.cleaned_data
+            nombre = info["nombre"]
+            turno = info["turno"]
+            comision = info["comision"]
+            deporte = Deportes(nombre=nombre, turno=turno, comision=comision)
+            deporte.save()
+            return redirect("AppEntrega:deportes")
+        else:
+            return render(request, "Appentrega/deportes.html", {"mensaje": "Error"})
+    else:
+        form = formDeporte()
+    return render(request, "Appentrega/deportes.html", {"formulario": form})
+
 
 
 def postProfesor(request):

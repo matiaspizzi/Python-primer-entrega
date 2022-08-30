@@ -1,6 +1,6 @@
 {% extends '.\layout.html' %}
 
-{% block content %}
+{% block main %}
 
 <h1>Socios</h1>
 
@@ -28,7 +28,7 @@
         </table>
     </div>
 
-    <div class="container-sm p-5 w-50">
+    <div class="container-sm px-5 w-50">
         <h4 class="p-2">Agregar socio:</h4>
         <form action="{% url 'AppEntrega:socioFormulario' %}" method="post">
             {% csrf_token %}

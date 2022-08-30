@@ -1,41 +1,53 @@
 {% extends '.\layout.html' %}
 
-{% block content %}
-<div class="d-flex justify-content-between">
-    <h1>Deportes</h1>
-    <a href="{% url 'AppEntrega:deporteFormulario' %}" class="btn btn-success" style="height: 40px;">Agregar deporte</a>
-</div>
+{% block main %}
+<h1>Deportes</h1>
 
 <div class="container p-4">
-
-    <div class="container p-5 w-50">
-        <form method="post" action="{% url 'AppEntrega:getDeporte' %}">
-            <div class="mb-3">
-                <div class="d-flex gap-2">
-                    <input type="text" class="form-control" id="inputDeporte" placeholder="Buscar deporte">
-                    <button type="submit" class="btn btn-primary">Buscar</button>
-                </div>
+    <div class="container p-3 w-50">
+        <form method="get" action="{% url 'AppEntrega:getDeporte' %}" class="mb-3">
+            <div class="d-flex gap-2">
+                <input type="text" class="form-control" id="inputDeporte" name="deporte" placeholder="Buscar deporte">
+                <button type="submit" class="btn btn-primary">Buscar</button>
             </div>
         </form>
     </div>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Deporte</th>
-                <th>Turno</th>
-                <th>Comisión</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for deporte in deportes %}
-            <tr>
-                <td>{{ deporte.nombre }}</td>
-                <td>{{ deporte.turno }}</td>
-                <td>{{ deporte.comision }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <hr>
+
+    <div class="container d-flex">
+        <div class="container p-4">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Deporte</th>
+                        <th>Turno</th>
+                        <th>Comisión</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for deporte in deportes %}
+                    <tr>
+                        <td>{{ deporte.nombre }}</td>
+                        <td>{{ deporte.turno }}</td>
+                        <td>{{ deporte.comision }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="container-sm px-5 w-50">
+            <h4 class="p-2">Agregar deporte:</h4>
+            <form action="{% url 'AppEntrega:deporteFormulario' %}" method="post">
+                {% csrf_token %}
+                <input type="text" name="nombre" placeholder="Nombre" class="form-control m-2">
+                <input type="text" name="turno" placeholder="Turno (Mañana/Tarde/Noche)" class="form-control m-2">
+                <input type="number" name="comision" placeholder="Comisión" class="form-control m-2"> 
+
+                <button type="submit" class="btn btn-primary m-2">Agregar</button>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock %}

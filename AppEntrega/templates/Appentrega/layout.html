@@ -14,19 +14,18 @@
 
     {% if mensaje %}
       <div class="container d-flex justify-content-center p-4">
-        <div class="w-50 alert alert-success">
-          {{ mensaje }}
+        <div class="w-50 alert alert-danger d-flex justify-content-center">
+          <h4 class="m-0 fw-16">{{ mensaje }}</h4>
         </div>
       </div>
     {% endif %}
 
     <div class="container py-5">
-        {% block content %}
+        {% block main %}
         {% endblock %}
     </div>
 
-
-
+    {% include 'partials/footer.html' %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
   </body>
 </html>
