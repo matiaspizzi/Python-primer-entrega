@@ -1,0 +1,44 @@
+{% extends '.\layout.html' %}
+
+{% block content %}
+
+<h1>Profesores</h1>
+
+<div class="container d-flex">
+    <div class="container p-4">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Profesión</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for profesor in profesores %}
+                <tr>
+                    <td>{{ profesor.nombre }}</td>
+                    <td>{{ profesor.apellido }}</td>
+                    <td>{{ profesor.email }}</td>
+                    <td>{{ profesor.profesion }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container-sm p-5 w-50">
+        <h4 class="p-2">Agregar profesor:</h4>
+        <form action="{% url 'AppEntrega:profeFormulario' %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="nombre" placeholder="Nombre" class="form-control m-2">
+            <input type="text" name="apellido" placeholder="Apellido" class="form-control m-2">
+            <input type="email" name="email" placeholder="E-mail" class="form-control m-2"> 
+            <input type="text" name="profesion" placeholder="Profesion" class="form-control m-2">
+
+            <button type="submit" class="btn btn-primary m-2">Agregar</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends '.\layout.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between">
+    <h1>Deportes</h1>
+    <a href="{% url 'AppEntrega:deporteFormulario' %}" class="btn btn-success" style="height: 40px;">Agregar deporte</a>
+</div>
+
+<div class="container p-4">
+
+    <div class="container p-5 w-50">
+        <form method="post" action="{% url 'AppEntrega:getDeporte' %}">
+            <div class="mb-3">
+                <div class="d-flex gap-2">
+                    <input type="text" class="form-control" id="inputDeporte" placeholder="Buscar deporte">
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Deporte</th>
+                <th>Turno</th>
+                <th>Comisión</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for deporte in deportes %}
+            <tr>
+                <td>{{ deporte.nombre }}</td>
+                <td>{{ deporte.turno }}</td>
+                <td>{{ deporte.comision }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
